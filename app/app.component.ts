@@ -5,7 +5,7 @@ import {Component} from 'angular2/core';
     directives:[],
     providers:[],
     template: `
-    <h1>Welcome</h1>
+    <h1 class="redHeader">Welcome</h1>
     <button class="ui button"> Follow </button>
     `
 })

@@ -1,4 +1,5 @@
 System.register(['angular2/core'], function(exports_1) {
+    "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -24,12 +25,12 @@ System.register(['angular2/core'], function(exports_1) {
                         selector: 'hg-tool',
                         directives: [],
                         providers: [],
-                        template: "\n    <h1>Welcome</h1>\n    <button class=\"ui button\"> Follow </button>\n    "
+                        template: "\n    <h1 class=\"redHeader\">Welcome</h1>\n    <button class=\"ui button\"> Follow </button>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
-            })();
+            }());
             exports_1("AppComponent", AppComponent);
         }
     }
