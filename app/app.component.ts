@@ -1,4 +1,7 @@
 import {Component} from 'angular2/core';
+// <reference path="../typings/browser/ambient/lodash/lodash.d.ts" /> // not working yet
+
+let _ = window._;
 
 @Component({
     selector: 'hg-tool',
@@ -9,4 +12,10 @@ import {Component} from 'angular2/core';
     <button class="ui button"> Follow </button>
     `
 })
-export class AppComponent { }
+export class AppComponent {
+
+  ngOnInit(){
+    console.log(_.compact(["lodash ","is ",0,"working!"]));
+  }
+
+}
