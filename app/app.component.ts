@@ -1,8 +1,6 @@
 import {Component} from 'angular2/core';
 // <reference path="../typings/browser/ambient/lodash/lodash.d.ts" /> // not working yet
 
-let _ = window._;
-
 @Component({
     selector: 'hg-tool',
     directives:[],
