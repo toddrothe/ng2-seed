@@ -2,3 +2,8 @@ node_modules
 .sass-cache
 css
 semantic/dist
+app/app.component.js
+app/app.component.js.map
+app/boot.js.map
+app/boot.js
+app/nested/nested.component.js.map
