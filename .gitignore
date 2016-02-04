@@ -9,3 +9,10 @@ app/boot.js
 app/nested/nested.component.js.map
 nested.component.js.map
 app.component.js.map
+src/nested/nested.component.js
+typings/jquery
+dist
+typings/tsd.d.ts
+typings/angularjs
+typings/firebase
+typings/lodash
