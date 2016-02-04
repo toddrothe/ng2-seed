@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     tsProject = tsc.createProject('tsconfig.json'),
     browserSync = require('browser-sync'),
     superstatic = require( 'superstatic' ),
+    sass = require('gulp-sass'),
     Config = require('./gulpfile.config');
 
 var config = new Config();
@@ -59,15 +60,26 @@ gulp.task('pack-html', function () {
         .pipe(gulp.dest('dist'));
 });
 
-// gulp.task('watch', function() {
-//     gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
-// });
+gulp.task('sass-me', function () {
+  return gulp
+  .src(config.sassInput)
+  .pipe(sass())
+  .pipe(gulp.dest(config.sassOutput));
+});
 
-gulp.task('serve', ['compile-ts', 'pack-html'], function() {
+gulp.task('watch-ts', function() {
+    gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
+});
+
+gulp.task('watch-sass', function () {
+  gulp.watch([config.sassInput], ['sass-me']);
+});
+
+gulp.task('serve', ['compile-ts', 'sass-me', 'pack-html','watch-ts', 'watch-sass'], function() {
   process.stdout.write('Starting browserSync and superstatic...\n');
   browserSync({
     port: 3002,
-    files: ['index.html', '**/*.js', '**/*.html'],
+    files: ['index.html', '**/*.js', '**/*.html', '**/*.css'],
     injectChanges: true,
     logFileChanges: false,
     logLevel: 'silent',
