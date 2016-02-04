@@ -1,13 +1,13 @@
 import {Component} from 'angular2/core';
 /// <reference path="../typings/browser/ambient/lodash/lodash.d.ts" />
 
-import {NestedComponent} from './nested/nested.component';
+import {NestedComponent} from './nested/nested.component.js';
 
 @Component({
     selector: 'hg-tool',
     directives:[NestedComponent],
     providers:[],
-    templateUrl: 'app/app.component.html'
+    templateUrl: './app.component.html'
 })
 export class AppComponent {
 

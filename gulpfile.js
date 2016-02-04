@@ -1,29 +1,84 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var semanticWatch = require('./semantic/tasks/watch');
-var semanticBuild = require('./semantic/tasks/build');
+'use strict';
 
-gulp.task('sass', function () {
-  gulp.src('./scss/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./css'))
-    .pipe(browserSync.stream());
+var gulp = require('gulp'),
+    debug = require('gulp-debug'),
+    inject = require('gulp-inject'),
+    tsc = require('gulp-typescript'),
+    tslint = require('gulp-tslint'),
+    sourcemaps = require('gulp-sourcemaps'),
+    del = require('del'),
+    tsProject = tsc.createProject('tsconfig.json'),
+    browserSync = require('browser-sync'),
+    superstatic = require( 'superstatic' ),
+    Config = require('./gulpfile.config');
+
+var config = new Config();
+
+/**
+ * Lint TypeScript files.
+ */
+gulp.task('ts-lint', function () {
+    return gulp.src(config.allTypeScript).pipe(tslint()).pipe(tslint.report('prose'));
 });
 
-gulp.task('build semantic', semanticBuild);
-gulp.task('watch semantic', semanticWatch);
+/**
+ * Compile TypeScript and include references to dist dir.
+ */
+gulp.task('compile-ts', function () {
+    var sourceTsFiles = [config.allTypeScript,                //path to typescript files
+                         config.libraryTypeScriptDefinitions]; //reference to library .d.ts files
 
-gulp.task('serve', function() {
+    var tsResult = gulp.src(sourceTsFiles)
+                       .pipe(sourcemaps.init())
+                       .pipe(tsc(tsProject));
+
+        tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
+        return tsResult.js
+                        .pipe(sourcemaps.write('.'))
+                        .pipe(gulp.dest(config.tsOutputPath));
+});
+
+/**
+ * Delete generated JavaScript files.
+ */
+gulp.task('clean-ts', function (cb) {
+  var typeScriptGenFiles = [
+                              config.tsOutputPath +'/**/*.js',    // path to all JS files auto gen'd by editor
+                              config.tsOutputPath +'/**/*.js.map', // path to all sourcemap files auto gen'd by editor
+                              '!' + config.tsOutputPath + '/lib'
+                           ];
+  // delete the files
+  del(typeScriptGenFiles, cb);
+});
+
+/*
+* Push html files to dist dir
+*/
+gulp.task('pack-html', function () {
+    return gulp.src('src/**/*.html')
+        .pipe(gulp.dest('dist'));
+});
+
+// gulp.task('watch', function() {
+//     gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
+// });
+
+gulp.task('serve', ['compile-ts', 'pack-html'], function() {
+  process.stdout.write('Starting browserSync and superstatic...\n');
   browserSync({
+    port: 3002,
+    files: ['index.html', '**/*.js', '**/*.html'],
+    injectChanges: true,
+    logFileChanges: false,
+    logLevel: 'silent',
+    logPrefix: 'angularin20typescript',
+    notify: true,
+    reloadDelay: 0,
     server: {
-      baseDir: '.'
+      baseDir: 'dist',
+      middleware: superstatic({ debug: false})
     }
   });
-  gulp.watch( ['scss/*.scss','*.html', 'app/**/*.js'], ['sass', 'watch semantic'], {cwd: '.'}, reload);
 });
 
-gulp.task('fresh build', ['sass','serve', 'build semantic']);
-
-gulp.task('default', ['sass','serve']);
+gulp.task('default', ['clean-ts', 'serve']);

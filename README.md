@@ -1,8 +1,11 @@
 # ng2-seed
 Seed with Angular2, gulp, browser-sync, semantic ui
 
-# Runs sass, serves files and compiles semantic
-$ gulp fresh-build
+<!-- compiles js files from ts files and packs into 'dist' dir -->
+gulp compile-ts
 
-# Run sass and serves files from this project to localhost:3000 (or next available port)
-$ gulp
+<!-- sends html files to 'dist' -->
+gulp pack-html
+
+<!-- cleans js files generated from ts, compiles ts and packs js and html into 'dist' -->
+gulp serve

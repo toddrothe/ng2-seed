@@ -7,3 +7,5 @@ app/app.component.js.map
 app/boot.js.map
 app/boot.js
 app/nested/nested.component.js.map
+nested.component.js.map
+app.component.js.map

@@ -26,19 +26,17 @@
       System.config({
         packages: {
           app: {
-            format: 'register',
-            defaultExtension: 'js'
+            format: 'register'
           }
         },
         map: {
           'rxjs':'node_modules/rxjs/'
         },
         packages: {
-          'app': {defaultExtension: 'js'},
           'rxjs':{defaultExtension: 'js'}
         }
       });
-      System.import('app/boot')
+      System.import('boot.js')
             .then(null, console.error.bind(console));
     </script>
 

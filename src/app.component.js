@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1) {
+System.register(['angular2/core', './nested/nested.component.js'], function(exports_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -9,33 +9,36 @@ System.register(['angular2/core'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
-    var NestedComponent;
+    var core_1, nested_component_js_1;
+    var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (nested_component_js_1_1) {
+                nested_component_js_1 = nested_component_js_1_1;
             }],
         execute: function() {
-            NestedComponent = (function () {
-                function NestedComponent() {
+            AppComponent = (function () {
+                function AppComponent() {
                 }
-                NestedComponent.prototype.ngOnInit = function () {
-                    console.log("nested component is working!");
+                AppComponent.prototype.ngOnInit = function () {
+                    console.log(_.compact(["lodash ", "is ", 0, "working!"]));
                 };
-                NestedComponent = __decorate([
+                AppComponent = __decorate([
                     core_1.Component({
-                        selector: 'nested-component',
-                        directives: [],
+                        selector: 'hg-tool',
+                        directives: [nested_component_js_1.NestedComponent],
                         providers: [],
-                        templateUrl: './app/nested/nested.component.html'
+                        templateUrl: './app.component.html'
                     }), 
                     __metadata('design:paramtypes', [])
-                ], NestedComponent);
-                return NestedComponent;
+                ], AppComponent);
+                return AppComponent;
             }());
-            exports_1("NestedComponent", NestedComponent);
+            exports_1("AppComponent", AppComponent);
         }
     }
 });
-//# sourceMappingURL=nested.component.js.map
+//# sourceMappingURL=app.component.js.map

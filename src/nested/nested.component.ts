@@ -4,7 +4,7 @@ import {Component} from 'angular2/core';
     selector: 'nested-component',
     directives:[],
     providers:[],
-    templateUrl: './app/nested/nested.component.html'
+    templateUrl: './nested/nested.component.html'
 })
 
 export class NestedComponent {
